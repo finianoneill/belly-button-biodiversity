@@ -18,8 +18,14 @@ function buildMetadata(sample) {
 function buildCharts(sample) {
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
-
+  d3.json(sample).then(function(data){
     // @TODO: Build a Bubble Chart using the sample data
+    var data = [data];
+    //Plotly.newPlot("plot", data, layout);
+    Plotly.newPlot("plot", data);
+  })
+
+    
 
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
@@ -49,7 +55,7 @@ function init() {
 function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
   buildCharts(newSample);
-  buildMetadata(newSample);
+  //buildMetadata(newSample);
 }
 
 // Initialize the dashboard
