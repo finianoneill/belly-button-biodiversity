@@ -16,7 +16,6 @@ function buildMetadata(sample) {
 }
 
 function buildCharts(sample) {
-
   // @TODO: Use `d3.json` to fetch the sample data for the plots
   //Plotly.d3.json(`/samples/${sample}`, function(error, sampleData) {
   d3.json(`/samples/${sample}`).then(function(sampleData){
@@ -45,29 +44,20 @@ function buildCharts(sample) {
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
-
-    console.log(sampleData[0]['sample_values'].slice(0, 10))
     var pieData = [{
-        values: sampleData[0]['sample_values'].slice(0, 10),
-        labels: sampleData[0]['otu_ids'].slice(0, 10),
-        hovertext: labels.slice(0, 10),
-        hoverinfo: 'hovertext',
-        type: 'pie'
+        values: sampleData["sample_values"].slice(0, 10),
+        labels: sampleData["otu_ids"].slice(0, 10),
+        hovertext: bubbleLabels.slice(0, 10),
+        hoverinfo: "hovertext",
+        type: "pie"
     }];
     var pieLayout = {
         margin: { t: 0, l: 0 }
     };
     var PIE = document.getElementById('pie');
-    Plotly.plot(PIE, pieData, pieLayout);
-    
-
-  })
-
-    
-
-
-    
-}
+    Plotly.newPlot(PIE, pieData, pieLayout);
+  });    
+};
 
 function init() {
   // Grab a reference to the dropdown select element
