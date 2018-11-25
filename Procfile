@@ -1,1 +1,1 @@
-web: gunicorn belly_button_bio.app:app
+web: gunicorn belly_button_bio.app:app --log-level debug
