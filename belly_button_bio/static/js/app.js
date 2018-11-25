@@ -18,35 +18,29 @@ function buildMetadata(sample) {
 function buildCharts(sample) {
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
-  d3.json(sample).then(function(data){
+  //Plotly.d3.json(`/samples/${sample}`, function(error, sampleData) {
+  d3.json(`/samples/${sample}`).then(function(sampleData){
     // @TODO: Build a Bubble Chart using the sample data
-    var sampleValues = data["sample_values"]
-    var otuIDs = data["otu_ids"]
-    var outLabels = data["otu_labels"]
-
-    // Create the Traces
-    var trace1 = {
-      x: otuIDs,
-      y: sampleValues,
-      mode: "markers",
-      type: "scatter",
-      name: "sample_values",
-      marker: {
-        color: "#2077b4",
-        symbol: "hexagram"
-      }
+    var bubbleLabels = sampleData["otu_ids"];
+    // Build Bubble Chart
+    var bubbleLayout = {
+        margin: { t: 0 },
+        hovermode: 'closest',
+        xaxis: { title: 'OTU ID' }
     };
-
-    // Define the plot layout
-    var layout = {
-      title: "Sample Values by OTU ID",
-      xaxis: { title: "OTU IDs" },
-      yaxis: { title: "Sample Values" }
-    };
-
-    var data = [trace1];
+    var bubbleData = [{
+        x: sampleData["otu_ids"],
+        y: sampleData["sample_values"],
+        text: bubbleLabels,
+        mode: 'markers',
+        marker: {
+            size: sampleData["sample_values"],
+            color: sampleData["otu_ids"],
+            colorscale: "Earth",
+        }
+    }];
     var BUBBLE = document.getElementById('bubble');
-    Plotly.newPlot(BUBBLE, data, layout);
+    Plotly.newPlot(BUBBLE, bubbleData, bubbleLayout);
   })
 
     
@@ -72,14 +66,14 @@ function init() {
     // Use the first sample from the list to build the initial plots
     const firstSample = sampleNames[0];
     buildCharts(firstSample);
-    //buildMetadata(firstSample);
+    buildMetadata(firstSample);
   });
 }
 
 function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
   buildCharts(newSample);
-  //buildMetadata(newSample);
+  buildMetadata(newSample);
 }
 
 // Initialize the dashboard

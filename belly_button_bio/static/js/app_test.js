@@ -25,12 +25,12 @@ function buildCharts(sampleData, otuData) {
   };
   var bubbleData = [{
       x: sampleData[0]["otu_ids"],
-      y: sampleData[0]['sample_values'],
+      y: sampleData[0]["sample_values"],
       text: labels,
       mode: 'markers',
       marker: {
-          size: sampleData[0]['sample_values'],
-          color: sampleData[0]['otu_ids'],
+          size: sampleData[0]["sample_values"],
+          color: sampleData[0]["otu_ids"],
           colorscale: "Earth",
       }
   }];
