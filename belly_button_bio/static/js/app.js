@@ -20,9 +20,32 @@ function buildCharts(sample) {
   // @TODO: Use `d3.json` to fetch the sample data for the plots
   d3.json(sample).then(function(data){
     // @TODO: Build a Bubble Chart using the sample data
-    var data = [data];
-    //Plotly.newPlot("plot", data, layout);
-    Plotly.newPlot("plot", data);
+    var sampleValues = data["sample_values"]
+    var otuIDs = data["otu_ids"]
+    var outLabels = data["otu_labels"]
+
+    // Create the Traces
+    var trace1 = {
+      x: otuIDs,
+      y: sampleValues,
+      mode: "markers",
+      type: "scatter",
+      name: "sample_values",
+      marker: {
+        color: "#2077b4",
+        symbol: "hexagram"
+      }
+    };
+
+    // Define the plot layout
+    var layout = {
+      title: "Sample Values by OTU ID",
+      xaxis: { title: "OTU IDs" },
+      yaxis: { title: "Sample Values" }
+    };
+
+    var data = [trace1];
+    Plotly.newPlot("plot", data, layout);
   })
 
     
@@ -48,7 +71,7 @@ function init() {
     // Use the first sample from the list to build the initial plots
     const firstSample = sampleNames[0];
     buildCharts(firstSample);
-    buildMetadata(firstSample);
+    //buildMetadata(firstSample);
   });
 }
 
