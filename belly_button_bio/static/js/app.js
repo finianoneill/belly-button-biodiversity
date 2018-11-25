@@ -45,7 +45,8 @@ function buildCharts(sample) {
     };
 
     var data = [trace1];
-    Plotly.newPlot("plot", data, layout);
+    var BUBBLE = document.getElementById('bubble');
+    Plotly.newPlot(BUBBLE, data, layout);
   })
 
     
